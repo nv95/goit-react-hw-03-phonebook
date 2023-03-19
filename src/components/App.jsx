@@ -15,6 +15,20 @@ class App extends Component {
     filter: '',
   };
 
+  componentDidMount() {
+    const savedStorage = localStorage.getItem('contacts');
+    if (savedStorage) {
+      this.setState({
+        contacts: JSON.parse(savedStorage),
+      });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.contacts !== prevState.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
   formSubmitHandler = data => {
     this.repeatControl(data);
   };
